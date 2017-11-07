@@ -174,15 +174,15 @@ void ParticleFilter::resample() {
 	}
 	
 	// Perform wheel resampling
-	uniform_int_distribution<int> uniintdist(0, num_particles-1);
-	auto index = unintdist(gen);
+	uniform_int_distribution<int> int_dist_index(0, num_particles-1);
+	auto index = int_dist_index(gen);
 	
 	const double max_weight = *max_element(weights.begin(), weight.end());
-	uniform_real_distribution<double> unirealdist(0.0, max_weight);
+	uniform_real_distribution<double> real_dist_beta(0.0, max_weight);
 	
 	double beta = 0.0;
 	for (unsigned int i = 0; i < num_particles; i++) {
-		beta += unirealdist(gen) * 2.0;
+		beta += real_dist_beta(gen) * 2.0;
 		while (beta > weights[index]) {
 			beta -= weights[index];
 			index = (index + 1) % num_particles;
