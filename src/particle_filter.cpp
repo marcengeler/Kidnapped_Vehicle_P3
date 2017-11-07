@@ -128,7 +128,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 		
 		// Convert to map coordinates
 		vector<LandmarkObs> observations_new;
-		observatios_new.resize(observations.size());
+		observations_new.resize(observations.size());
 		for (unsigned int j = 0; j < observations.size(); j++) {
 			const double observation_x = cos(theta)*observations[j].x - sin(theta)*observations[j].y + x;
 			const double observation_y = sin(theta)*observations[j].x + cos(theta)*observations[j].y + y;
