@@ -30,11 +30,11 @@ static random_device rd;
 static default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
-	num_particles = 128;
+	num_particles = 64;
 	weights.resize(num_particles);
 	particles.resize(num_particles);
 	
-	epsilon = 0.00001;
+	epsilon = 0.000001;
 	
 	// Define Sensor Noise Distributions
 	normal_distribution<double> N_x(0,std[0]);
@@ -184,7 +184,7 @@ void ParticleFilter::resample() {
 	
 	double beta = 0.0;
 	for (unsigned int i = 0; i < num_particles; i++) {
-		beta += real_dist_beta(gen);
+		beta += real_dist_beta(gen) * 2.0;
 		while (beta > weights[index]) {
 			beta -= weights[index];
 			index = (index + 1) % num_particles;
