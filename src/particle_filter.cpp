@@ -56,22 +56,22 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
 
 void ParticleFilter::prediction(double delta_t, double std_pos[], double velocity, double yaw_rate) {
 	// Define Sensor Noise Distributions
-	normal_distribution<double> N_x(0,std[0]);
-	normal_distribution<double> N_y(0,std[1]);
-	normal_distribution<double> N_theta(0,std[2]);
+	normal_distribution<double> dist_x(0,std[0]);
+	normal_distribution<double> dist_y(0,std[1]);
+	normal_distribution<double> dist_theta(0,std[2]);
 	
 	for (unsigned int i = 0; i < num_particles; i++) {
 		// Calculate new state
 		// There is an issue if the yaw rate is very low  (close to 0) which needs
 		// to be tackled by this alternative function:
 		if (yaw_rate < epsilon) {
-			particles[i].x += velocity * cos(particles[i].theta) * delta_t + N_x(gen);
-			particles[i].y += velocity * sin(particles[i].theta) * delta_t + N_y(gen);
-			particles[i].theta += N_theta(gen);
+			particles[i].x += velocity * cos(particles[i].theta) * delta_t + dist_x(gen);
+			particles[i].y += velocity * sin(particles[i].theta) * delta_t + dist_y(gen);
+			particles[i].theta += dist_theta(gen);
 		} else {
-			particles[i].x += velocity / yaw_rate * (sin(particles[i].theta + yaw_rate * delta_t) - sin(particles[i].theta)) + N_x(gen);
-			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta) - cos(particles[i].theta + yaw_rate * delta_t))  + N_y(gen);
-			particles[i].theta += yaw_rate * delta_t + N_theta(gen);
+			particles[i].x += velocity / yaw_rate * (sin(particles[i].theta + yaw_rate * delta_t) - sin(particles[i].theta)) + dist_x(gen);
+			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta) - cos(particles[i].theta + yaw_rate * delta_t))  + dist_y(gen);
+			particles[i].theta += yaw_rate * delta_t + dist_theta(gen);
 		}
 	}
 }
