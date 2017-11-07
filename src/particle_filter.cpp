@@ -26,8 +26,8 @@ using std::default_random_engine;
 using std::random_device;
 
 // Initialize the default random engine like in the lecture
-random_device rd;
-default_random_engine gen(rd());
+static random_device rd;
+static default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
 	num_particles = 256;
@@ -70,7 +70,7 @@ void ParticleFilter::prediction(double delta_t, double std_pos[], double velocit
 			particles[i].theta += N_theta(gen);
 		} else {
 			particles[i].x += velocity / yaw_rate * (sin(particles[i].theta + yaw_rate * delta_t) - sin(particles[i].theta)) + N_x(gen);
-			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta) - cos(particles[i].theta + yaw_rate * delta_t))  + N_y(gen);
+			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta)) - cos(particles[i].theta + yaw_rate * delta_t)  + N_y(gen);
 			particles[i].theta += yaw_rate * delta_t + N_theta(gen);
 		}
 	}
