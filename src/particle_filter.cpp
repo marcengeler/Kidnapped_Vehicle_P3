@@ -81,16 +81,16 @@ void ParticleFilter::dataAssociation(std::vector<LandmarkObs> predicted, std::ve
 		LandmarkObs observation = observations[i];
 		
 		// Get the relative minimum distance using a for loop
-		double distance_init = 0;
-		double id = 0;
+		double distance_min = 0;
+		int id = 0;
 		
 		for (unsigned int j = 0; j < predicted.size(); j++) {
 			LandmarkObs prediction = predicted[j];
 			double distance_current = dist(observation.x, observation.y, prediction.x, prediction.y);
 			if (j == 0) {
 				distance_init = distance_current;
-			} else if (distance_current < distance_init) {
-				distance_init = distance_current;
+			} else if (distance_current < distance_min) {
+				distance_min = distance_current;
 				id = prediction.id;
 			}
 		}
@@ -156,7 +156,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 				}
 			}
 			
-			const double observation_weight = a * exp( - (pow( prediction_x - observation_x, 2) / (2 * landmark_std_x2) + pow( prediction_y - observation_y, 2) / (2 * landmark_std_y2)));
+			const double observation_weight = a * exp( - (pow(prediction_x - observation_x, 2) / (2 * landmark_std_x2) + pow(prediction_y - observation_y, 2) / (2 * landmark_std_y2)));
 			
 			particles[i].weight *= observation_weight;
 		}
@@ -165,11 +165,13 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 
 void ParticleFilter::resample() {
 	vector<Particle> particles_new;
+	particles_new.resize(num_particles);
 	
 	// Get a weights vector
 	vector<double> weights;
+	weights.resize(num_particles);
 	for (unsigned int i = 0; i < num_particles; i++) {
-		weights.push_back(particles[i].weight);
+		weights[i] = particles[i].weight;
 	}
 	
 	// Perform wheel resampling
@@ -187,7 +189,7 @@ void ParticleFilter::resample() {
 			index = (index + 1) % num_particles;
 		}
 		
-		particles_new.push_back(particles[index]);
+		particles_new[i] = particles[index];
 	}
 	particles = particles_new;
 }
