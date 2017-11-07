@@ -37,17 +37,17 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
 	epsilon = 0.0001;
 	
 	// Define Sensor Noise Distributions
-	normal_distribution<double> N_x(x,std[0]);
-	normal_distribution<double> N_y(y,std[1]);
-	normal_distribution<double> N_theta(theta,std[2]);
+	normal_distribution<double> init_x(x,std[0]);
+	normal_distribution<double> init_y(y,std[1]);
+	normal_distribution<double> init_theta(theta,std[2]);
 	
 	// Randomly initialize all the particles
 	for (unsigned int i = 0; i < num_particles; i++) {
 		// Generate a Particle with initial values
 		particles[i].id = i;
-		particles[i].x = N_x(gen);
-		particles[i].y = N_y(gen);
-		particles[i].theta = N_theta(gen);
+		particles[i].x = init_x(gen);
+		particles[i].y = init_y(gen);
+		particles[i].theta = init_theta(gen);
 		particles[i].weight = 1;
 	}
 	
