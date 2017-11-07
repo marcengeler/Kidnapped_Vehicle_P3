@@ -30,7 +30,7 @@ static random_device rd;
 static default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
-	num_particles = 512;
+	num_particles = 64;
 	weights.resize(num_particles);
 	particles.resize(num_particles);
 	
