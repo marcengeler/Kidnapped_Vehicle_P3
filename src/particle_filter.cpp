@@ -30,7 +30,7 @@ static random_device rd;
 static default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
-	num_particles = 64;
+	num_particles = 128;
 	weights.resize(num_particles);
 	particles.resize(num_particles);
 	
@@ -128,10 +128,11 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 		
 		// Convert to map coordinates
 		vector<LandmarkObs> observations_new;
+		observatios_new.resize(observations.size());
 		for (unsigned int j = 0; j < observations.size(); j++) {
 			const double observation_x = cos(theta)*observations[j].x - sin(theta)*observations[j].y + x;
 			const double observation_y = sin(theta)*observations[j].x + cos(theta)*observations[j].y + y;
-			observations_new.push_back(LandmarkObs{ observations[j].id, observation_x, observation_y });
+			observations_new[j] = LandmarkObs{ observations[j].id, observation_x, observation_y };
 		}
 		
 		// Associate observations and predictions for current particle
@@ -152,7 +153,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 					prediction_y = predictions[k].y;
 					
 					// End the loop immediately
-					break;
+					// break;
 				}
 			}
 			
