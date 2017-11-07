@@ -30,11 +30,11 @@ static random_device rd;
 static default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
-	num_particles = 256;
+	num_particles = 512;
 	weights.resize(num_particles);
 	particles.resize(num_particles);
 	
-	epsilon = 0.0001;
+	epsilon = 0.00001;
 	
 	// Define Sensor Noise Distributions
 	normal_distribution<double> N_x(0,std[0]);
