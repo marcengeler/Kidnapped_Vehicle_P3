@@ -26,11 +26,11 @@ struct Particle {
 
 
 class ParticleFilter {
-	
 	// Number of particles to draw
 	int num_particles; 
 	
-	
+	// Epsilon for close to 0 problems
+	double epsilon;
 	
 	// Flag, if filter is initialized
 	bool is_initialized;
