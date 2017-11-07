@@ -65,12 +65,14 @@ void ParticleFilter::prediction(double delta_t, double std_pos[], double velocit
 		// There is an issue if the yaw rate is very low  (close to 0) which needs
 		// to be tackled by this alternative function:
 		if (fabs(yaw_rate) < epsilon) {
-			particles[i].x += velocity * cos(particles[i].theta) * delta_t + N_x(gen);
-			particles[i].y += velocity * sin(particles[i].theta) * delta_t + N_y(gen);
+			particles[i].x += velocity * cos(particles[i].theta) * delta_t;
+			particles[i].y += velocity * sin(particles[i].theta) * delta_t;
 		} else {
-			particles[i].x += velocity / yaw_rate * (sin(particles[i].theta + yaw_rate * delta_t) - sin(particles[i].theta)) + N_x(gen);
-			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta) - cos(particles[i].theta + yaw_rate * delta_t))  + N_y(gen);
+			particles[i].x += velocity / yaw_rate * (sin(particles[i].theta + yaw_rate * delta_t) - sin(particles[i].theta));
+			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta) - cos(particles[i].theta + yaw_rate * delta_t));
 		}
+		particles[i].x += N_x(gen);
+		particles[i].y += N_y(gen);
 		particles[i].theta += yaw_rate * delta_t + N_theta(gen);
 	}
 }
