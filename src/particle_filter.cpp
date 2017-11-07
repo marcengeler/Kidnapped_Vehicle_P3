@@ -157,8 +157,8 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 				}
 			}
 			
-			prediction_x = map_landmarks.landmark_list.at(prediction_id -1).x_f;
-			prediction_y = map_landmarks.landmark_list.at(prediction_id -1).y_f;
+			prediction_x = map_landmarks.landmark_list.at(prediction_id).x_f;
+			prediction_y = map_landmarks.landmark_list.at(prediction_id).y_f;
 			
 			const double observation_weight = a * exp( - (pow(prediction_x - observation_x, 2) / (2 * landmark_std_x2) + pow(prediction_y - observation_y, 2) / (2 * landmark_std_y2)));
 			
