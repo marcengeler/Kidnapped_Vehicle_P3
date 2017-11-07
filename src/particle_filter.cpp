@@ -177,7 +177,7 @@ void ParticleFilter::resample() {
 	uniform_int_distribution<int> int_dist_index(0, num_particles-1);
 	auto index = int_dist_index(gen);
 	
-	const double max_weight = *max_element(weights.begin(), weight.end());
+	const double max_weight = *max_element(weights.begin(), weights.end());
 	uniform_real_distribution<double> real_dist_beta(0.0, max_weight);
 	
 	double beta = 0.0;
