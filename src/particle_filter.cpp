@@ -67,12 +67,11 @@ void ParticleFilter::prediction(double delta_t, double std_pos[], double velocit
 		if (yaw_rate < epsilon) {
 			particles[i].x += velocity * cos(particles[i].theta) * delta_t + N_x(gen);
 			particles[i].y += velocity * sin(particles[i].theta) * delta_t + N_y(gen);
-			particles[i].theta += N_theta(gen);
 		} else {
 			particles[i].x += velocity / yaw_rate * (sin(particles[i].theta + yaw_rate * delta_t) - sin(particles[i].theta)) + N_x(gen);
-			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta)) - cos(particles[i].theta + yaw_rate * delta_t)  + N_y(gen);
-			particles[i].theta += yaw_rate * delta_t + N_theta(gen);
+			particles[i].y += velocity / yaw_rate * (cos(particles[i].theta) - cos(particles[i].theta + yaw_rate * delta_t))  + N_y(gen);
 		}
+		particles[i].theta += yaw_rate * delta_t + N_theta(gen);
 	}
 }
 
