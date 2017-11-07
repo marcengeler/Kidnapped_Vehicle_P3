@@ -84,15 +84,13 @@ void ParticleFilter::dataAssociation(std::vector<LandmarkObs> predicted, std::ve
 		LandmarkObs observation = observations[i];
 		
 		// Get the relative minimum distance using a for loop
-		double distance_min = 0;
+		double distance_min = std::numeric_limits<double>::max();
 		int id = 0;
 		
 		for (unsigned int j = 0; j < predicted.size(); j++) {
 			LandmarkObs prediction = predicted[j];
 			double distance_current = dist(observation.x, observation.y, prediction.x, prediction.y);
-			if (j == 0) {
-				distance_min = distance_current;
-			} else if (distance_current < distance_min) {
+			if (distance_current < distance_min) {
 				distance_min = distance_current;
 				id = prediction.id;
 			}
