@@ -153,7 +153,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 					prediction_y = predictions[k].y;
 					
 					// End the loop immediately
-					// break;
+					break;
 				}
 			}
 			
@@ -184,7 +184,7 @@ void ParticleFilter::resample() {
 	
 	double beta = 0.0;
 	for (unsigned int i = 0; i < num_particles; i++) {
-		beta += real_dist_beta(gen) * 2.0;
+		beta += real_dist_beta(gen);
 		while (beta > weights[index]) {
 			beta -= weights[index];
 			index = (index + 1) % num_particles;
