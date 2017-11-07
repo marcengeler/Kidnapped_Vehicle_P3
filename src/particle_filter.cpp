@@ -26,8 +26,8 @@ using std::default_random_engine;
 using std::random_device;
 
 // Initialize the default random engine like in the lecture
-random_device rand;
-default_random_engine gen(rand());
+random_device rd;
+default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
 	num_particles = 128;
