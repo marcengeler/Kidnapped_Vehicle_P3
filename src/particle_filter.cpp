@@ -30,25 +30,25 @@ static random_device rd;
 static default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
-	num_particles = 64;
+	num_particles = 100;
 	weights.resize(num_particles);
 	particles.resize(num_particles);
 	
-	epsilon = 0.000001;
+	epsilon = 0.0001;
 	
 	// Define Sensor Noise Distributions
-	normal_distribution<double> N_x(0,std[0]);
-	normal_distribution<double> N_y(0,std[1]);
-	normal_distribution<double> N_theta(0,std[2]);
+	normal_distribution<double> N_x(x,std[0]);
+	normal_distribution<double> N_y(y,std[1]);
+	normal_distribution<double> N_theta(theta,std[2]);
 	
 	// Randomly initialize all the particles
 	for (unsigned int i = 0; i < num_particles; i++) {
 		// Generate a Particle with initial values
 		particles[i].id = i;
-		particles[i].x = x + N_x(gen);
-		particles[i].y = y + N_y(gen);
-		particles[i].theta = theta + N_theta(gen);
-		particles[i].weight = 1.0;
+		particles[i].x = N_x(gen);
+		particles[i].y = N_y(gen);
+		particles[i].theta = N_theta(gen);
+		particles[i].weight = 1;
 	}
 	
 	is_initialized = true;
@@ -156,6 +156,9 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 					break;
 				}
 			}
+			
+			double prediction_x = map_landmarks.landmark_list.at(predciction_id -1).x_f;
+			double prediction_y = map_landmarks.landmark_list.at(predciction_id -1).y_f;
 			
 			const double observation_weight = a * exp( - (pow(prediction_x - observation_x, 2) / (2 * landmark_std_x2) + pow(prediction_y - observation_y, 2) / (2 * landmark_std_y2)));
 			
