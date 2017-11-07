@@ -56,9 +56,9 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
 
 void ParticleFilter::prediction(double delta_t, double std_pos[], double velocity, double yaw_rate) {
 	// Define Sensor Noise Distributions
-	normal_distribution<double> N_x(0,std[0]);
-	normal_distribution<double> N_y(0,std[1]);
-	normal_distribution<double> N_theta(0,std[2]);
+	normal_distribution<double> N_x(0,std_pos[0]);
+	normal_distribution<double> N_y(0,std_pos[1]);
+	normal_distribution<double> N_theta(0,std_pos[2]);
 	
 	for (unsigned int i = 0; i < num_particles; i++) {
 		// Calculate new state
