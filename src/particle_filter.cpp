@@ -86,8 +86,8 @@ void ParticleFilter::dataAssociation(std::vector<LandmarkObs> predicted, std::ve
 		double id = 0;
 		
 		for (unsigned int j = 0; j < predicted.size(); j++) {
-			LandmarkObs prediction = predicted[j]
-			double distance_current = dist(o.x, o.y, p.x, p.y);
+			LandmarkObs prediction = predicted[j];
+			double distance_current = dist(observation.x, observation.y, prediction.x, prediction.y);
 			if (j == 0) {
 				distance_init = distance_current;
 			} else if (distance_current < distance_init) {
