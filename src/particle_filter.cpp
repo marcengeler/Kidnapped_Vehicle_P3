@@ -27,9 +27,9 @@ using std::random_device;
 
 // Initialize the default random engine like in the lecture
 static random_device rd;
-static default_random_engine gen(rd());
 
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
+	default_random_engine gen(rd());
 	num_particles = 100;
 	weights.resize(num_particles);
 	particles.resize(num_particles);
@@ -56,6 +56,7 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
 
 void ParticleFilter::prediction(double delta_t, double std_pos[], double velocity, double yaw_rate) {
 	// Define Sensor Noise Distributions
+	default_random_engine gen(rd());
 	normal_distribution<double> N_x(0,std_pos[0]);
 	normal_distribution<double> N_y(0,std_pos[1]);
 	normal_distribution<double> N_theta(0,std_pos[2]);
@@ -171,6 +172,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 }
 
 void ParticleFilter::resample() {
+	default_random_engine gen(rd());
 	vector<Particle> particles_new;
 	particles_new.resize(num_particles);
 	
