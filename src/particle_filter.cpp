@@ -197,6 +197,7 @@ void ParticleFilter::resample() {
 		particles_new[i] = particles[index];
 	}
 	particles = particles_new;
+	weights.clear();
 }
 
 
