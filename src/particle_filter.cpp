@@ -164,6 +164,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 			
 			particles[i].weight *= observation_weight;
 		}
+		weights.push_back(particles[i].weight);
 	}
 }
 
